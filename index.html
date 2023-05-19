@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    
+</head>
+<body>
+    <div class="container1">
+        <label for="amount">ExpenseAmount: </label>
+        <input type="text" id="Amount">
+        <label for="description">ChooseDescription</label>
+        <input type="text" id="Description">
+        <label for="Category">Choose a Category</label>
+        <select name="chooseCategory" id="categoryName">
+            <option value="fuel">Fuel</option>
+            <option value="food">Food</option>
+            <option value="elec">Electricity</option>
+            <option value="movie">Movie</option>
+        </select>
+        <button id="btn">AddExpenses</button>
+    </div>
+    <div class="container2">
+        <ul id="list">
+
+        </ul>
+
+    </div>
+    <script>
+        var btn1=document.getElementById('btn');
+        var listAdded=document.getElementById('list');
+        btn1.addEventListener('click',addItem);
+        function addItem(e){
+            e.preventDefault();
+            var inputItem1=document.getElementById('Amount').value;
+            var inputItem2=document.getElementById('Description').value;
+            var inputItem3=document.getElementById('categoryName').value;
+
+
+            var li=document.createElement('li');
+            li.className='group-items';
+            li.appendChild(document.createTextNode(inputItem1));
+            li.appendChild(document.createTextNode("-"+inputItem2));
+            li.appendChild(document.createTextNode("-"+inputItem3+"-"));
+            // delete button
+            var deletebtn=document.createElement('button');
+            deletebtn.className='delete';
+            deletebtn.appendChild(document.createTextNode('deleteExpenses'));
+            li.appendChild(deletebtn);
+            var editbtn=document.createElement('button');
+            editbtn.className='edit';
+            editbtn.appendChild(document.createTextNode('editExpenses'));
+            li.appendChild(editbtn);
+            listAdded.appendChild(li);
+            var obj={
+                inputItem1,
+                inputItem2,
+                inputItem3
+            }
+            localStorage.setItem('Details',JSON.stringify(obj));
+        }
+        var delBtn=document.getElementById('list');
+        delBtn.addEventListener('click',removeItem);
+        function removeItem(e){
+            if(e.target.classList.contains('delete')){
+                var li=e.target.parentElement;
+                listAdded.removeChild(li);
+            }
+        }
+        delBtn.addEventListener('click',removeItem);
+        function removeItem(e){
+            if(e.target.classList.contains('edit')){
+                var li=e.target.parentElement;
+                listAdded.removeChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
